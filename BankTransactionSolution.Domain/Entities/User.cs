@@ -16,7 +16,6 @@ namespace BankTransactionSolution.Domain.Entities
             this.email = email;
             this.phone = phone;
             bank_accounts = new HashSet<BankAccount>();
-            audit_logs = new HashSet<AuditLogs>(); 
         }
         public string user_name { get; set; }   
         public string full_name { get; set; }   
@@ -24,7 +23,5 @@ namespace BankTransactionSolution.Domain.Entities
         public string phone { get; set; }
         [JsonIgnore]
         public virtual ICollection<BankAccount> bank_accounts { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<AuditLogs> audit_logs { get; set; } 
     }
 }

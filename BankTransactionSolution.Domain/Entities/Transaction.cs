@@ -23,6 +23,7 @@ namespace BankTransactionSolution.Domain.Entities
         public int to_account_id { get; set; }
         public double amount { get; set; }
         public string currency {  get; set; }   
+        public string description { get; set; } 
         public TransactionStatus status { get; set; }
         public string status_text => status.ToString();
 

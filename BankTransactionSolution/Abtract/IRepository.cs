@@ -9,7 +9,7 @@ namespace BankTransactionSolution.Data.Abtract
 {
     public interface IRepository<T> where T : class
     {
-        Task Add(T entity);
+        Task<int> Add(T entity);
         Task Add(IEnumerable<T> entities);
         Task Commit();
         void Delete(T entity);

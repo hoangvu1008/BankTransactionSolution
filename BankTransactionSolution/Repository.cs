@@ -1,87 +1,106 @@
 ﻿
-//using BankTransactionSolution.Data.Abtract;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Linq.Expressions;
-//using System.Text;
-//using System.Threading.Tasks;
+using BankTransactionSolution.Data.Abtract;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace BankTransactionSolution.Data
-//{
-//    public class Repository<T> : IRepository<T> where T : class
-//    {
-//        private readonly SomoTaskManagemnetContext _context;
-//        private IDbContextTransaction _transaction;
-//        public Repository(SomoTaskManagemnetContext context)
-//        {
-//            _context = context;
-//        }
-
-
-//        public async Task<IEnumerable<T>> GetData(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes)
-//        {
-//            IQueryable<T> query = _context.Set<T>();
-
-//            if (includes != null)
-//            {
-//                query = includes.Aggregate(query, (current, include) => current.Include(include));
-//            }
-
-//            if (expression == null)
-//            {
-//                return await query.ToListAsync();
-//            }
-
-//            return await query.Where(expression).ToListAsync();
-//        }
+namespace BankTransactionSolution.Data
+{
+    public class Repository<T> : IRepository<T> where T : class
+    {
+        private readonly BankTransactionSolutionContext _context;
+        private IDbContextTransaction _transaction;
+        public Repository(BankTransactionSolutionContext context)
+        {
+            _context = context;
+        }
 
 
-//        public async Task<T> GetById(object id)
-//        {
-//            return await _context.Set<T>().FindAsync(id);
-//        }
+        public async Task<IEnumerable<T>> GetData(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _context.Set<T>();
 
-//        public async Task Add(T entity)
-//        {
-//            await _context.Set<T>().AddAsync(entity);
-//        }
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
 
-//        public async Task Add(IEnumerable<T> entities)
-//        {
-//            await _context.Set<T>().AddRangeAsync(entities);
-//        }
+            if (expression == null)
+            {
+                return await query.ToListAsync();
+            }
 
-//        public async Task<T> GetSingleByCondition(Expression<Func<T, bool>> expression)
-//        {
-//            return await _context.Set<T>().Where(expression).SingleOrDefaultAsync();
-//        }
+            return await query.Where(expression).ToListAsync();
+        }
 
-//        public void Delete(T entity)
-//        {
-//            EntityEntry entityEntry = _context.Entry<T>(entity);
-//            entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-//        }
 
-//        public void Delete(Expression<Func<T, bool>> expression)
-//        {
-//            var entities = _context.Set<T>().Where(expression).ToList();
-//            if (entities.Count > 0)
-//            {
-//                _context.Set<T>().RemoveRange(entities);
-//            }
-//        }
+        public async Task<T> GetById(object id)
+        {
+            return await _context.Set<T>().FindAsync(id);
+        }
 
-//        public void Update(T entity)
-//        {
-//            EntityEntry entityEntry = _context.Entry<T>(entity);
-            
-//            entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-//        }
+        public async Task<int> Add(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return (int)entity.GetType().GetProperty("id")?.GetValue(entity, null);
+        }
 
-//        public async Task Commit()
-//        {
-//            await _context.SaveChangesAsync();
-//        }
-//    }
-//}
+
+        public async Task Add(IEnumerable<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+        }
+
+        public async Task<T> GetSingleByCondition(Expression<Func<T, bool>> expression)
+        {
+            return await _context.Set<T>().Where(expression).SingleOrDefaultAsync();
+        }
+
+        public async Task<T> GetSingleByCondition(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (includes != null)
+            {
+                query = includes.Aggregate(query, (current, include) => current.Include(include));
+            }
+
+            return await query.Where(expression).SingleOrDefaultAsync();
+        }
+
+
+        public void Delete(T entity)
+        {
+            EntityEntry entityEntry = _context.Entry<T>(entity);
+            entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
+        public void Delete(Expression<Func<T, bool>> expression)
+        {
+            var entities = _context.Set<T>().Where(expression).ToList();
+            if (entities.Count > 0)
+            {
+                _context.Set<T>().RemoveRange(entities);
+            }
+        }
+
+        public void Update(T entity)
+        {
+            EntityEntry entityEntry = _context.Entry<T>(entity);
+
+            entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public async Task Commit()
+        {
+            await _context.SaveChangesAsync();
+        }
+    }
+}

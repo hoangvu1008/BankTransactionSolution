@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTransactionSolution.Data", "BankTransactionSolution\BankTransactionSolution.Data.csproj", "{69B70EC1-946E-4870-84BA-46658910CC58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTransactionSolution.Data", "BankTransactionSolution\BankTransactionSolution.Data.csproj", "{69B70EC1-946E-4870-84BA-46658910CC58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTransactionSolution.Domain", "BankTransactionSolution.Domain\BankTransactionSolution.Domain.csproj", "{1042290E-944D-429C-BECF-ABDC2E5D1640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTransactionSolution.Domain", "BankTransactionSolution.Domain\BankTransactionSolution.Domain.csproj", "{1042290E-944D-429C-BECF-ABDC2E5D1640}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTransactionSolution.Infrastructure", "BankTransactionSolution.Infrastructure\BankTransactionSolution.Infrastructure.csproj", "{29E67B3E-CEC6-4D7A-AEC4-DD45A741B2C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankTransactionSolution.Services", "BankTransactionSolution.Services\BankTransactionSolution.Services.csproj", "{384FFD63-E01A-472B-A79E-D45AC98B269A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTransactionSolution.Client", "BankTransactionSolution.Client\BankTransactionSolution.Client.csproj", "{BD12F88C-854C-46F6-BC0E-97AB1E0E0AEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankTransactionSolution.Authen", "BankTransactionSolution.Authen\BankTransactionSolution.Authen.csproj", "{4D57D7E8-3754-4393-87FE-F8E495F7E5EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{1042290E-944D-429C-BECF-ABDC2E5D1640}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1042290E-944D-429C-BECF-ABDC2E5D1640}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1042290E-944D-429C-BECF-ABDC2E5D1640}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29E67B3E-CEC6-4D7A-AEC4-DD45A741B2C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29E67B3E-CEC6-4D7A-AEC4-DD45A741B2C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29E67B3E-CEC6-4D7A-AEC4-DD45A741B2C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29E67B3E-CEC6-4D7A-AEC4-DD45A741B2C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{384FFD63-E01A-472B-A79E-D45AC98B269A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{384FFD63-E01A-472B-A79E-D45AC98B269A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{384FFD63-E01A-472B-A79E-D45AC98B269A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{384FFD63-E01A-472B-A79E-D45AC98B269A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD12F88C-854C-46F6-BC0E-97AB1E0E0AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD12F88C-854C-46F6-BC0E-97AB1E0E0AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD12F88C-854C-46F6-BC0E-97AB1E0E0AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD12F88C-854C-46F6-BC0E-97AB1E0E0AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D57D7E8-3754-4393-87FE-F8E495F7E5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D57D7E8-3754-4393-87FE-F8E495F7E5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D57D7E8-3754-4393-87FE-F8E495F7E5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D57D7E8-3754-4393-87FE-F8E495F7E5EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

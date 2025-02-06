@@ -1,0 +1,134 @@
+﻿@{
+    Layout = Context.Request.Headers["X-Requested-With"] == "XMLHttpRequest" ? null : "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<title>Giao dịch</title>
+<div class="container-fluid" id="market-container">
+
+    <h1 class="h3 mb-2 text-gray-800">Giao dịch</h1>
+    @*  <div class="form-group row" style="margin-bottom: 10px">
+    <div class="col-md-10">
+    </div>
+    <div class="col-md-2">
+    <button class="button btn btn-primary" onclick="openCreateModal()" style="width: 100%;">Tạo</button>
+    </div>
+    </div> *@
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Tên người giao dịch</th>
+                            <th>Số tài khoản</th>
+                            <th>Mã ngân hàng</th>
+                            <th>Tên ngân hàng</th>
+                        </tr>
+                    </thead>
+
+                    <tbody data-bind="foreach: bankAccounts">
+                        <tr data-bind="attr: { 'data-id': id }">
+                            <td data-bind="text: id"></td>
+                            <td data-bind="text: user_full_name"></td>
+                            <td data-bind="text: bank_account"></td>
+                            <td data-bind="text: bank_code"></td>
+                            <td data-bind="text: bank_name"></td>
+                            <td>
+                                <div class="action-icons">
+                                    <button class="btn btn-info btn-sm" data-bind="click: function(data, event) { $parent.viewDetail($data.id); }">
+                                        <i class="fa fa-info-circle"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- popup detail -->
+    <div id="detailModal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailModal()">&times;</span>
+            <h2>Chi tiết</h2>
+
+            <div class="form-group" style="position: relative; border: 1px solid #ccc; padding: 20px; border-radius: 5px; background-color: #f9f9f9;">
+                <div class="form-group">
+                    <label for="detail_full_name">Tên người giao dịch</label>
+                    <input type="text" id="detail_full_name" class="form-control" readonly/>
+                </div>
+
+                <div class="form-group">
+                    <label for="detail_bank_account">Số tài khoản</label>
+                    <input type="text" id="detail_bank_account" class="form-control"readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="detail_bank_code">Mã ngân hàng </label>
+                    <input type="text" id="detail_bank_code" class="form-control" readonly/>
+                </div>
+
+                <div class="form-group">
+                    <label for="detail_bank_name">Tên ngân hàng</label>
+                    <input type="text" id="detail_bank_name" class="form-control" readonly/>
+                </div>
+            </div>
+
+            <h3>Chọn tài khoản để giao dịch</h3>
+
+            <!-- Thẻ ngân hàng đang chọn -->
+            <div class="bank-card" onclick="openBankListModal()">
+                <div class="bank-header">
+                    <div id="id_bank_account_user" hidden></div>
+                    <p>
+                        <strong>Tên ngân hàng:</strong> <span id="bank_name_display">Ngân hàng Quân đội</span> <br>
+                        <strong>Mã ngân hàng:</strong> <span id="bank_code_display">MB</span>
+                    </p>
+                </div>
+                <div class="bank-info">
+                    <p><strong>Số tài khoản:</strong> <span id="bank_account_display">123456789</span></p>
+                    <p><strong>Số dư:</strong> <span id="bank_balance_display">1,000,000 VND</span></p>
+                </div>
+            </div>
+
+            <!-- Popup danh sách ngân hàng -->
+            <div id="bankListModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close" onclick="closeBankListModal()">&times;</span>
+                    <h2>Chọn ngân hàng</h2>
+                    <ul id="bankList">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-between mt-4">
+                @* <button class="button-1 delete btn-delete" data-bind="click: deleteService">
+                <i class="fas fa-trash"></i> Xóa
+                </button> *@
+                <button class="btn btn-primary btn-close" onclick="closeDetailModal()"></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/Script/BankAccount/BankAccountModal.js"></script>
+<script src="~/Script/BankAccount/BankAccountView.js"></script>
+<script src="~/Script/BankAccount/BankAccountFunction.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var viewModel = new BankAccountModal();
+        ko.applyBindings(viewModel, document.getElementById("market-container"));
+    });
+</script>
+
+
+

@@ -30,12 +30,20 @@ namespace BankTransactionSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("account_number")
+                    b.Property<double>("balance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("bank_account")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("balance")
-                        .HasColumnType("float");
+                    b.Property<string>("bank_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("bank_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("currency")
                         .IsRequired()
@@ -168,6 +176,10 @@ namespace BankTransactionSolution.Data.Migrations
 
                     b.Property<bool>("is_deleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phone")
                         .IsRequired()

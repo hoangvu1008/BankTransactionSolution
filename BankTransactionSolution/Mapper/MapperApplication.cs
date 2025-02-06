@@ -14,7 +14,10 @@ namespace BankTransactionSolution.Data.Mapper
         public MapperApplication()
         {
             CreateMap<User, UserModel>()
-                .ForMember(dest => dest.bank_accounts, opt => opt.MapFrom(src => src.bank_accounts != null));
+                .ForMember(dest => dest.bank_accounts, opt => opt.MapFrom(src => src.bank_accounts));
+
+            CreateMap<BankAccount, BankAccountListModel>()
+                .ForMember(dest => dest.user_full_name, opt => opt.MapFrom(src => src.user.full_name));
         }
     }
 }

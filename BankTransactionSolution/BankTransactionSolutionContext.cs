@@ -61,7 +61,7 @@ namespace BankTransactionSolution.Data
                 entity.Property(e => e.date_created);
                 entity.Property(e => e.date_updated);
                 entity.Property(e => e.user_id).IsRequired();
-                entity.Property(e => e.account_number).IsRequired();
+                //entity.Property(e => e.account_number).IsRequired();
                 entity.Property(e => e.balance).IsRequired();
                 entity.Property(e => e.currency).IsRequired();
                 entity.Property(e => e.currency).IsRequired();

@@ -1,0 +1,45 @@
+﻿<title>User Profile</title>
+
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light" id="profile_user">
+    <div class="form-container p-5 shadow rounded bg-white" style="width: 600px;">
+        <div class="text-center mb-4">
+            <img id="profile_user_image" alt="User Avatar" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;" />
+        </div>
+
+        <div class="row mb-4">
+            <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="profile_user_full_name">Tên</label>
+                    <input type="text" id="profile_user_full_name" class="form-control" placeholder="Enter your first name" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                    <label class="form-label" for="profile_user_user_name">Tên tài khoản</label>
+                    <input type="text" id="profile_user_user_name" class="form-control" placeholder="Enter your last name" readonly />
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="profile_user_email">Email</label>
+            <input type="text" id="profile_user_email" class="form-control" placeholder="Enter your email" />
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="profile_user_phone">Điện thoại</label>
+            <input type="number" id="profile_user_phone" class="form-control" placeholder="Your phone number" />
+        </div>
+
+        <div class="text-center">
+            <button type="button" class="btn btn-primary btn-block btn-lg" data-bind="click : updateUser">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var viewModel = new ProfileModel();
+        ko.applyBindings(viewModel, document.getElementById("profile_user"));
+    });
+</script>

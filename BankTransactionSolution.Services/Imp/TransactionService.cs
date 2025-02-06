@@ -79,7 +79,7 @@ namespace BankTransactionSolution.Services.Imp
             {
                 _unitOfWork.RollbackTransaction();
                 throw new Exception("Quá trình chuyển tiền bị timeout", timeoutEx);
-            }
+            } 
             catch (Exception ex)
             {
                 _unitOfWork.RollbackTransaction();

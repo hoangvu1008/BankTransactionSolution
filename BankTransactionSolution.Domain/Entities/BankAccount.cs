@@ -9,24 +9,28 @@ namespace BankTransactionSolution.Domain.Entities
 {
     public class BankAccount :BaseEntity
     {
-        public BankAccount(int user_id, string account_number, double balance, string currency)
+        public BankAccount(int user_id, string bank_account, double balance, string currency, string bank_code, string bank_name)
         {
             this.user_id = user_id;
-            this.account_number = account_number;
+            this.bank_account = bank_account;
             this.balance = balance;
             this.currency = currency;
             from_transactions = new HashSet<Transaction>();
             to_transactions = new HashSet<Transaction>();
+            this.bank_code = bank_code;
+            this.bank_name = bank_name;
         }
         public int user_id { get; set; }    
-        public string account_number { get; set; }  
+        public string bank_account { get; set; }  
+        public string bank_code { get; set; }
+        public string bank_name { get; set; }   
         public double balance { get; set; } 
         public string currency { get; set; }
-
         [JsonIgnore]
         public virtual User user { get; set; }
         [JsonIgnore]
         public   virtual ICollection<Transaction> from_transactions { get; set; }
+        [JsonIgnore]
         public   virtual ICollection<Transaction> to_transactions { get; set; }
     }
 }

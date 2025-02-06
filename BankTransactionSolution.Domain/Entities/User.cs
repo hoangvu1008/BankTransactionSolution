@@ -15,8 +15,8 @@ namespace BankTransactionSolution.Domain.Entities
             this.full_name = full_name;
             this.email = email;
             this.phone = phone;
-            bank_accounts = new HashSet<BankAccount>();
             this.password = password;
+            bank_accounts = new HashSet<BankAccount>();
         }
         public string user_name { get; set; }   
         public string full_name { get; set; }   

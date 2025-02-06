@@ -51,12 +51,8 @@ namespace BankTransactionSolution.Services.Imp
             };
 
             var user = await _unitOfWork.user_repositoty
-                                        .GetData(expression: expression, includes: includes);
-
-            var json = System.Text.Json.JsonSerializer.Serialize(user.First(), new JsonSerializerOptions { WriteIndented = true });
-
-            Console.WriteLine(json);
-            return user.First();
+                                        .GetSingleByCondition(expression: expression, includes: includes);
+            return user;
         }
     }
 }

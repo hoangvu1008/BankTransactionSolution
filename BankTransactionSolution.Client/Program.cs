@@ -1,5 +1,6 @@
 using BankTransactionSolution.Data.Mapper;
 using BankTransactionSolution.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,13 @@ builder.Services.RegisterContextDb(builder.Configuration);
 builder.Services.RegisterDI();
 builder.Services.AddAutoMapper(typeof(MapperApplication));
 builder.Services.RegisterTokenBear(builder.Configuration);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Login";
+    });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -27,9 +35,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();

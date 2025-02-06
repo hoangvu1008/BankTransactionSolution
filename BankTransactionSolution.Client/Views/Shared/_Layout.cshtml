@@ -6,13 +6,30 @@
     <title>@ViewData["Title"] - BankTransactionSolution.Client</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BankTransactionSolution.Client.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/BankTransactionSolution.Client.styles.css" asp-append-version="true" /> *@
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="@Url.Content("~/js/knockout-3.5.1.js")"></script>
+    <script src="@Url.Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/vendor/fontawesome-free/css/all.min.css")" rel="stylesheet" type="text/css"></script>
+    <script src="@Url.Content("~/vendor/jquery/jquery.min.js")" rel="stylesheet" type="text/css"></script>
+    <script src="@Url.Content("~/vendor/jquery-easing/jquery.easing.min.js")" rel="stylesheet" type="text/css"></script>
+    <script src="@Url.Content("~/js/sb-admin-2.min.js")" rel="stylesheet" type="text/css"></script>
+    <link rel="stylesheet" href="@Url.Content("~/css/sb-admin-2.min.css")">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="~/Script/Common/Common.js"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" id="header">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BankTransactionSolution.Client</a>
+                <a class="navbar-brand" asp-area="" id="full_name"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,10 +37,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="BankAccount" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @* <img class="img-profile rounded-circle" id="userProfilePic" alt="User Image" style="width: 30px; height: 30px; margin-right: 10px;"> *@
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="fullName"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" asp-controller="User" asp-action="UserDetail">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Hồ sơ
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Đăng xuất
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -36,14 +67,17 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - BankTransactionSolution.Client - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/Script/User/UserModel.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var viewModel = new UserModel();
+            ko.applyBindings(viewModel, document.getElementById("header"));
+        });
+
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

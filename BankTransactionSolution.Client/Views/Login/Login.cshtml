@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DHub Admin - Login</title>
+
+    <!-- Custom fonts for this template-->
+    <script src="@Url.Content("~/vendor/fontawesome-free/css/all.min.css")" rel="stylesheet" type="text/css"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" href="@Url.Content("~/css/sb-admin-2.min.css")">
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+            <div class="card shadow-lg border-0" style="width: 100%; max-width: 400px; padding: 20px;">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <h1 class="h4 text-gray-900">Chào mừng bạn trở lại!</h1>
+                        <p class="text-muted">Hãy đăng nhập để tiếp tục sử dụng tài khoản của bạn</p>
+                    </div>
+
+                    <form class="user" id="loginForm" asp-action="Login" method="post">
+                        <div id="loginError" class="text-danger mb-3" style="display: none;"></div>
+                        <div class="form-group mb-3">
+                            <label for="exampleInputEmail" class="form-label">Tài khoản</label>
+                            <input type="text" class="form-control form-control-user" name="user_name" id="exampleInputEmail" placeholder="Vui lòng nhập số điện thoại hoặc email" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="exampleInputPassword" class="form-label">Mật khẩu</label>
+                            <input type="password" class="form-control form-control-user" name="password" id="exampleInputPassword" placeholder="Vui lòng nhập mật khẩu" required>
+                        </div>
+                        <button type="submit" value="Login" class="btn btn-primary btn-user btn-block">
+                            Login
+                        </button>
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" href="register.html">Create an Account!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="@Url.Content("~/vendor/jquery/jquery.min.js")" rel="stylesheet" type="text/css"></script>
+    <script src="@Url.Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="@Url.Content("~/vendor/jquery-easing/jquery.easing.min.js")" rel="stylesheet" type="text/css"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="@Url.Content("~/js/sb-admin-2.min.js")" rel="stylesheet" type="text/css"></script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json', 
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData)) // Chuyển FormData thành JSON
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (!result.result) {
+                    const errorElement = document.getElementById('loginError');
+                    errorElement.textContent = result.message;
+                    errorElement.style.display = 'block';
+                } else {
+                    window.location.href = '/BankAccount/Index';
+                }
+            } catch (error) {
+                console.error('Login Error:', error);
+                const errorElement = document.getElementById('loginError');
+                errorElement.textContent = 'Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.';
+                errorElement.style.display = 'block';
+            }
+        });
+
+
+    </script>
+</body>
+
+
+</html>
+
+
+
+
+

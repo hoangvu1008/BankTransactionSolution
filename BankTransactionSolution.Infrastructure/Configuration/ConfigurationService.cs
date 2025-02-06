@@ -1,11 +1,12 @@
-﻿using BankTransactionSolution.Data;
+﻿using BankTransactionSolution.Authentication;
+using BankTransactionSolution.Data;
 using BankTransactionSolution.Data.Abtract;
 using BankTransactionSolution.Services.Imp;
 using BankTransactionSolution.Services.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using SomoTaskManagement.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -30,7 +31,9 @@ namespace BankTransactionSolution.Infrastructure.Configuration
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBankAccountService, BankAccountService>();
         }
     }
 }

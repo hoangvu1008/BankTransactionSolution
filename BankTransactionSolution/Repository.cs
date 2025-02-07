@@ -49,8 +49,16 @@ namespace BankTransactionSolution.Data
         {
             await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
-            return (int)entity.GetType().GetProperty("id")?.GetValue(entity, null);
+
+            var property = entity.GetType().GetProperty("id");
+            if (property != null && property.PropertyType == typeof(int))
+            {
+                return (int)property.GetValue(entity, null);
+            }
+
+            throw new InvalidOperationException("Entity does not have an 'id' property of type int.");
         }
+
 
 
         public async Task Add(IEnumerable<T> entities)

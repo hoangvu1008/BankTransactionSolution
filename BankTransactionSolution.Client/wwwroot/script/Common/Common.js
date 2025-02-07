@@ -20,3 +20,4 @@
     $(modal).off('click');
 
 }
+

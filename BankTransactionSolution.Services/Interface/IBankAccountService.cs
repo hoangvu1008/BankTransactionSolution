@@ -13,6 +13,6 @@ namespace BankTransactionSolution.Services.Interface
     {
         Task<IEnumerable<BankAccountListModel>> GetListBankForUser(string user_name);
         Task<BankAccountListModel> GetSingleByCondition(Expression<Func<BankAccount, bool>> expression);
-        Task<IEnumerable<BankAccountListModel>> ListBankAccountAsync();
+        Task<IEnumerable<BankAccountListModel>> ListBankAccountAsync(string user_name);
     }
 }

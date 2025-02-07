@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankTransactionSolution.Domain.Entities
 {
-    public class BankAccount :BaseEntity
+    public class BankAccount : BaseEntity
     {
         public BankAccount(int user_id, string bank_account, double balance, string currency, string bank_code, string bank_name)
         {
@@ -20,17 +20,17 @@ namespace BankTransactionSolution.Domain.Entities
             this.bank_code = bank_code;
             this.bank_name = bank_name;
         }
-        public int user_id { get; set; }    
-        public string bank_account { get; set; }  
+        public int user_id { get; set; }
+        public string bank_account { get; set; }
         public string bank_code { get; set; }
-        public string bank_name { get; set; }   
-        public double balance { get; set; } 
+        public string bank_name { get; set; }
+        public double balance { get; set; }
         public string currency { get; set; }
         [JsonIgnore]
         public virtual User user { get; set; }
         [JsonIgnore]
-        public   virtual ICollection<Transaction> from_transactions { get; set; }
+        public virtual ICollection<Transaction> from_transactions { get; set; }
         [JsonIgnore]
-        public   virtual ICollection<Transaction> to_transactions { get; set; }
+        public virtual ICollection<Transaction> to_transactions { get; set; }
     }
 }

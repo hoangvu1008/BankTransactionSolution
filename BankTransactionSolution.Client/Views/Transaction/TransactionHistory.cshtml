@@ -1,0 +1,31 @@
+﻿<!-- Danh sách ngân hàng -->
+<div data-bind="foreach: bankAccountsForUser" id="transaction_container">
+    <div class="bank-card" data-bind="click: function() { $parent.loadTransactionHistory($data) }">
+        <div class="bank-header">
+            <p>
+                <strong>Tên ngân hàng:</strong> <span data-bind="text: bank_name"></span> <br>
+                <strong>Mã ngân hàng:</strong> <span data-bind="text: bank_code"></span>
+            </p>
+        </div>
+        <div class="bank-info">
+            <p><strong>Số tài khoản:</strong> <span data-bind="text: bank_account"></span></p>
+            <p><strong>Số dư:</strong> <span data-bind="text: balance"></span></p>
+        </div>
+    </div>
+</div>
+
+<div id="historyModal" class="modal" style="display: none;">
+    
+</div>
+
+<script src="~/Script/Transaction/TransactionModal.js"></script>
+<script src="~/Script/Transaction/TransactionView.js"></script>
+@* <script src="~/Script/BankAccount/BankAccountView.js"></script> *@
+
+<script>
+    $(document).ready(function () {
+        var viewModel = new TransactionModal();
+        ko.applyBindings(viewModel, document.getElementById("transaction_container"));
+    });
+
+</script>

@@ -17,7 +17,13 @@ namespace BankTransactionSolution.Client.Controllers
 
         public async Task<IActionResult> GetBankAccount()
         {
-            var bankAccountList = await _bankAccountService.ListBankAccountAsync();
+            var userName = Request.Cookies["user_name"];
+
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new Exception("user_name invalid");
+            }
+            var bankAccountList = await _bankAccountService.ListBankAccountAsync(userName);
 
 
             return Ok(bankAccountList);

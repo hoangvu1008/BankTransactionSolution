@@ -100,7 +100,7 @@ namespace BankTransactionSolution.Data
                 entity.Property(e => e.from_account_json).IsRequired();
                 entity.Property(e => e.to_account_json).IsRequired();
 
-                entity.HasOne(d => d.transaction).WithMany(p => p.transaction_logs).HasForeignKey(d => d.transaction_id).HasConstraintName("FK_Transaction_TransactionLogs").OnDelete(DeleteBehavior.NoAction);
+                //entity.HasOne(d => d.transaction).WithMany(p => p.transaction_logs).HasForeignKey(d => d.transaction_id).HasConstraintName("FK_Transaction_TransactionLogs").OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

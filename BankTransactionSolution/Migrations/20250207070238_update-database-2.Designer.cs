@@ -4,6 +4,7 @@ using BankTransactionSolution.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankTransactionSolution.Data.Migrations
 {
     [DbContext(typeof(BankTransactionSolutionContext))]
-    partial class BankTransactionSolutionContextModelSnapshot : ModelSnapshot
+    [Migration("20250207070238_update-database-2")]
+    partial class updatedatabase2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

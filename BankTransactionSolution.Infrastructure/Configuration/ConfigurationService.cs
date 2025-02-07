@@ -34,6 +34,7 @@ namespace BankTransactionSolution.Infrastructure.Configuration
             services.AddScoped<ITokenHandler, TokenHandler>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBankAccountService, BankAccountService>();
+            services.AddScoped<ITransactionService, TransactionService>();
         }
     }
 }

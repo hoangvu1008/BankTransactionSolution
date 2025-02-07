@@ -56,7 +56,70 @@
     self.viewDetail = function (id) {
         self.currentServiceId(id);
         OpenDetailBankAccount(id);
+        openBankListModal();
     };
+
+    self.createTransaction = function () {
+        var amount = parseFloat($('#transaction_amount').val()) || 0;
+        var balance = parseFloat($('#bank_balance_display').text().replace(/,/g, '')) || 0; // Lấy số dư và loại bỏ dấu phẩy
+        var toAccountId = parseInt($('#detail_id_bank_account').val(), 10) || 0;
+
+        console.log(`Số dư hiện tại: ${balance}, Số tiền giao dịch: ${amount}`);
+
+        if (amount > balance) {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: 'Tài khoản của bạn không đủ số dư, vui lòng chọn tài khoản ngân hàng khác.',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            return;
+        }
+        console.log("from_account_id", $('#id_bank_account_user').val())
+        var request = {
+            from_account_id: $('#id_bank_account_user').val(),
+            to_account_id: toAccountId,
+            amount: amount,
+            currency: "VND",
+            description: $('#transaction_description').val()
+        };
+
+        console.log("Yêu cầu giao dịch:", request);
+
+        $.ajax({
+            url: '/Transaction/CreateTransaction',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(request),
+            success: function (response) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Tạo giao dịch thành công',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                closeDetailModal();
+                $('#transaction_description').val("");
+                $('#transaction_amount').val(0);
+            },
+            error: function () {
+                console.error("AJAX Error - Không thể tạo giao dịch");
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Không thể tạo giao dịch.',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
+        });
+    };
+
 
     self.loadBankAccount();
 }

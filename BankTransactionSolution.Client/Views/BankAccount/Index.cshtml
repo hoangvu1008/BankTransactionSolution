@@ -60,7 +60,9 @@
             <span class="close" onclick="closeDetailModal()">&times;</span>
             <h2>Chi tiết</h2>
 
+            <h4>Thông tin người giao dịch</h4>
             <div class="form-group" style="position: relative; border: 1px solid #ccc; padding: 20px; border-radius: 5px; background-color: #f9f9f9;">
+                <input type="number" id="detail_id_bank_account" class="form-control" hidden />
                 <div class="form-group">
                     <label for="detail_full_name">Tên người giao dịch</label>
                     <input type="text" id="detail_full_name" class="form-control" readonly/>
@@ -82,12 +84,21 @@
                 </div>
             </div>
 
-            <h3>Chọn tài khoản để giao dịch</h3>
+            <h4>Số tiền giao dịch</h4>
+            <div class="form-group">
+                <label for="transaction_amount">Số tiền giao dịch</label>
+                <input type="number" id="transaction_amount" class="form-control" />
+            </div>
 
-            <!-- Thẻ ngân hàng đang chọn -->
+            <div class="form-group">
+                <label for="transaction_description">Mô tả</label>
+                <input type="text" id="transaction_description" class="form-control" />
+            </div>
+
+            <h4>Chọn tài khoản để giao dịch</h4>
             <div class="bank-card" onclick="openBankListModal()">
                 <div class="bank-header">
-                    <div id="id_bank_account_user" hidden></div>
+                    <input type="number" id="id_bank_account_user" class="form-control" hidden />
                     <p>
                         <strong>Tên ngân hàng:</strong> <span id="bank_name_display">Ngân hàng Quân đội</span> <br>
                         <strong>Mã ngân hàng:</strong> <span id="bank_code_display">MB</span>
@@ -99,7 +110,6 @@
                 </div>
             </div>
 
-            <!-- Popup danh sách ngân hàng -->
             <div id="bankListModal" class="modal" style="display: none;">
                 <div class="modal-content">
                     <span class="close" onclick="closeBankListModal()">&times;</span>
@@ -109,10 +119,10 @@
                 </div>
             </div>
 
-            <div class="modal-footer d-flex justify-content-between mt-4">
-                @* <button class="button-1 delete btn-delete" data-bind="click: deleteService">
-                <i class="fas fa-trash"></i> Xóa
-                </button> *@
+            <div class="modal-footer d-flex justify-content-between mt-4" id="transaction-container">
+                <button class="button-1 delete btn-delete" data-bind="click: createTransaction">
+                    <i class="fas fa-money-bill-transfer"></i> Giao dịch
+                </button>
                 <button class="btn btn-primary btn-close" onclick="closeDetailModal()"></button>
             </div>
 
@@ -122,12 +132,18 @@
 <script src="~/Script/BankAccount/BankAccountModal.js"></script>
 <script src="~/Script/BankAccount/BankAccountView.js"></script>
 <script src="~/Script/BankAccount/BankAccountFunction.js"></script>
+@* <script src="~/Script/Transaction/TransactionModal.js"></script> *@
 
 <script>
     $(document).ready(function () {
         var viewModel = new BankAccountModal();
         ko.applyBindings(viewModel, document.getElementById("market-container"));
     });
+
+    // $(document).ready(function () {
+    //     var viewModel = new TransactionModal();
+    //     ko.applyBindings(viewModel, document.getElementById("transaction-container"));
+    // });
 </script>
 
 

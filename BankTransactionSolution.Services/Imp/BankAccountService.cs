@@ -48,16 +48,18 @@ namespace BankTransactionSolution.Services.Imp
             return result; 
         }
 
-        public async Task<IEnumerable<BankAccountListModel>> ListBankAccountAsync()
+        public async Task<IEnumerable<BankAccountListModel>> ListBankAccountAsync(string user_name)
         {
             var includes = new Expression<Func<BankAccount, object>>[]
            {
                     t => t.user,
            };
-            var bankAccounts = await _unitOfWork.bank_account_repositoty.GetData(expression:null,includes:includes);
+            var bankAccounts = await _unitOfWork.bank_account_repositoty.GetData(expression:t=>t.user.user_name != user_name, includes:includes);
 
             var result = _mapper.Map<IEnumerable<BankAccountListModel>>(bankAccounts);
             return result;
         }
+
+       
     }
 }

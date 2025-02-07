@@ -1,4 +1,5 @@
-﻿using BankTransactionSolution.Data;
+﻿using AutoMapper;
+using BankTransactionSolution.Data;
 using BankTransactionSolution.Data.Abtract;
 using BankTransactionSolution.Domain.Entities;
 using BankTransactionSolution.Domain.Enum;
@@ -9,6 +10,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,10 +19,12 @@ namespace BankTransactionSolution.Services.Imp
     public class TransactionService: ITransactionService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public TransactionService(IUnitOfWork unitOfWork)
+        public TransactionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<bool> UserTranfer(UserTranferModel userTranferModel)
@@ -34,14 +38,11 @@ namespace BankTransactionSolution.Services.Imp
             await _unitOfWork.BeginTransactionAsync();
             try
             {
-                var user = await _unitOfWork.user_repositoty.GetSingleByCondition(t => t.id == userTranferModel.id_user_tranfer);
-                if (user == null) return false;
-
-                var bankAccounts = await _unitOfWork.bank_account_repositoty.GetData(t => t.user_id == user.id && t.id == userTranferModel.from_account_id);
-                if (!bankAccounts.Any())
+                var bankAccounts = await _unitOfWork.bank_account_repositoty.GetSingleByCondition(t =>t.id == userTranferModel.from_account_id);
+                if (bankAccounts == null)
                     throw new Exception("Tài khoản nguồn không hợp lệ");
 
-                var bankAccountTranfer = bankAccounts.First();
+                var bankAccountTranfer = bankAccounts;
                 if (bankAccountTranfer.balance < userTranferModel.amount)
                     throw new Exception("Tài khoản không đủ số dư để thực hiện giao dịch");
 
@@ -58,10 +59,14 @@ namespace BankTransactionSolution.Services.Imp
                 recipientAccount.balance += userTranferModel.amount;
                 _unitOfWork.bank_account_repositoty.Update(recipientAccount);
 
-                var transaction = new Transaction(userTranferModel.from_account_id, userTranferModel.to_account_id, userTranferModel.amount, "VND", TransactionStatus.pending);
+                var transaction = new Transaction(userTranferModel.from_account_id, userTranferModel.to_account_id, userTranferModel.amount, "VND", TransactionStatus.pending, userTranferModel.description);
                 var transaction_id = await _unitOfWork.transaction_repositoty.Add(transaction);
-
-                var transaction_logs = new TransactionLogs(transaction_id, TransactionStatus.pending, JsonConvert.SerializeObject(bankAccountTranfer), JsonConvert.SerializeObject(recipientAccount));
+                
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                var transaction_logs = new TransactionLogs(transaction_id, TransactionStatus.pending, JsonConvert.SerializeObject(bankAccountTranfer, settings), JsonConvert.SerializeObject(recipientAccount, settings));
                 await _unitOfWork.transaction_logs_repositoty.Add(transaction_logs);
 
                 _unitOfWork.CommitTransaction();
@@ -89,7 +94,18 @@ namespace BankTransactionSolution.Services.Imp
             return true;
         }
 
+        public async Task<IEnumerable<TransactionHistoryModel>> ListBankAccountHistoryAsync(int bank_acccount_id)
+        {
+            var includes = new Expression<Func<Transaction, object>>[]
+           {
+                    t => t.from_account,
+                    t => t.to_account,
+           };
+            var transactions = await _unitOfWork.transaction_repositoty.GetData(expression: t => t.from_account.id == bank_acccount_id || t.to_account.id == bank_acccount_id, includes: includes);
 
+            var result = _mapper.Map<IEnumerable<TransactionHistoryModel>>(transactions);
+            return result;
+        }
     }
 }
 

@@ -8,7 +8,6 @@ namespace BankTransactionSolution.Domain.Model
 {
     public class UserTranferModel
     {
-        public int id_user_tranfer {  get; set; }
         public int from_account_id { get; set; }
         public int to_account_id { get; set; }
         public double amount { get; set; }

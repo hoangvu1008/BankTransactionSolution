@@ -1,11 +1,5 @@
 ﻿using BankTransactionSolution.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 namespace BankTransactionSolution.Domain.Entities
 {
     public class TransactionLogs: BaseEntity
@@ -22,7 +16,6 @@ namespace BankTransactionSolution.Domain.Entities
         public string status_text => status.ToString(); 
         public string from_account_json { get; set; }   
         public string to_account_json { get;set; }
-        [JsonIgnore]
-        public virtual Transaction transaction { get; set; }    
+
     }
 }

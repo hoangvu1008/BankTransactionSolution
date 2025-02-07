@@ -18,6 +18,13 @@ namespace BankTransactionSolution.Data.Mapper
 
             CreateMap<BankAccount, BankAccountListModel>()
                 .ForMember(dest => dest.user_full_name, opt => opt.MapFrom(src => src.user.full_name));
+
+
+            CreateMap<Transaction, TransactionHistoryModel>()
+                .ForMember(dest => dest.from_account_bank, opt => opt.MapFrom(src => src.from_account.bank_name))
+                .ForMember(dest => dest.from_account, opt => opt.MapFrom(src => src.from_account.bank_account))
+                .ForMember(dest => dest.to_account_bank, opt => opt.MapFrom(src => src.to_account.bank_name))
+                .ForMember(dest => dest.to_account, opt => opt.MapFrom(src => src.to_account.bank_account));
         }
     }
 }

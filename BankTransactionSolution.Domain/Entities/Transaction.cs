@@ -10,14 +10,14 @@ namespace BankTransactionSolution.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
-        public Transaction(int from_account_id, int to_account_id, double amount, string currency, TransactionStatus status)
+        public Transaction(int from_account_id, int to_account_id, double amount, string currency, TransactionStatus status, string description)
         {
             this.from_account_id = from_account_id;
             this.to_account_id = to_account_id;
             this.amount = amount;
             this.currency = currency;
             this.status = status;
-            transaction_logs = new HashSet<TransactionLogs>();
+            this.description = description;
         }
         public int from_account_id { get; set; }
         public int to_account_id { get; set; }
@@ -31,7 +31,6 @@ namespace BankTransactionSolution.Domain.Entities
         public virtual BankAccount from_account { get; set; }
         [JsonIgnore]
         public virtual BankAccount to_account { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<TransactionLogs> transaction_logs {  get; set; }
+
     }
 }

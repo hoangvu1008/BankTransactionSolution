@@ -9,6 +9,10 @@ namespace BankTransactionSolution.Domain.Entities
 {
     public class User : BaseEntity
     {
+        public User()
+        {
+            
+        }
         public User(string user_name, string full_name, string email, string phone, string password)
         {
             this.user_name = user_name;

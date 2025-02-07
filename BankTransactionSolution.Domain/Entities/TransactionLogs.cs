@@ -4,6 +4,10 @@ namespace BankTransactionSolution.Domain.Entities
 {
     public class TransactionLogs: BaseEntity
     {
+        public TransactionLogs()
+        {
+            
+        }
         public TransactionLogs(int transaction_id, TransactionStatus status, string from_account_json, string to_account_json)
         {
             this.transaction_id = transaction_id;

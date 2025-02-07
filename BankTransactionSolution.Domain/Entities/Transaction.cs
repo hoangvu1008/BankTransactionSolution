@@ -10,6 +10,10 @@ namespace BankTransactionSolution.Domain.Entities
 {
     public class Transaction : BaseEntity
     {
+        public Transaction()
+        {
+            
+        }
         public Transaction(int from_account_id, int to_account_id, double amount, string currency, TransactionStatus status, string description)
         {
             this.from_account_id = from_account_id;
